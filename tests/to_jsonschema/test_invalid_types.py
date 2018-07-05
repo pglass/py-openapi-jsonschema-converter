@@ -20,9 +20,17 @@ def test_invalid_types():
         convert(schema)
     assert 'Type "invalidtype" is not a valid type'
 
+    schema = {"type": ["string", "foo"]}
+    with pytest.raises(InvalidTypeError) as e:
+        convert(schema)
+    assert 'Type "["string", "foo"]" is not a valid type'
+
 
 def test_valid_types():
-    types = ['integer', 'number', 'string', 'boolean', 'object', 'array']
+    types = [
+        'integer', 'number', 'string', 'boolean', 'object', 'array',
+        ['string', 'null']
+    ]
 
     for ttype in types:
         schema = {'type': ttype}
