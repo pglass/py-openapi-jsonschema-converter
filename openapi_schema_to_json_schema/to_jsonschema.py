@@ -111,9 +111,14 @@ def convertProperties(properties, options):
 
 
 def validateType(ttype):
-    validTypes = ['integer', 'number', 'string', 'boolean', 'object', 'array']
+    validTypes = [
+        'integer', 'number', 'string', 'boolean', 'object', 'array', 'null'
+    ]
 
-    if ttype is not None and ttype not in validTypes:
+    if isinstance(ttype, list):
+        if any([item not in validTypes for item in ttype]):
+            raise InvalidTypeError('Type "%s" is not a valid type' % ttype)
+    elif ttype is not None and ttype not in validTypes:
         raise InvalidTypeError('Type "%s" is not a valid type' % ttype)
 
 
